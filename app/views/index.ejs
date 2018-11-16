@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html>
-  <%- include('partials/head.ejs', {title: title}); %>
+  <%- include('partials/header.ejs', {title: title}); %>
   <body>
        <!-- Begin page content -->
-       <main role="main" class="container">
-         <h1 class="mt-5">Welcome to our manager!</h1>
-         <p><a class="btn btn-primary" href="/projet/creer" role="button">New Project</a></p>
-       </main>
+       <h1>Welcom to <%=title%></h1>
 
    <% include partials/footer %>
   </body>
