@@ -1,17 +1,11 @@
 const express = require('express');
-const dbUtils = require('../models/contract.js');
+const dbUtils = require('./models/contract.js');
 const app = express();
 const port = 5000;
 
-app.get('/contracts/', function (req, res){
-  /*let filters = {
-    startDate: req.body.startDate,
-    endDate: req.body.endDate,
-    lowestCost: req.body.lowestCost,
-    highestCost: req.body.highestCost
-  }*/
-  let startDate = req.body.startDate;
-  let endDate = req.body.endDate;
+app.get('/contracts/', async function (req, res){
+  let startDate = Date.parse(req.body.startDate);
+  let endDate = Date.parse(req.body.endDate);
   let lowestPrice = req.body.lowestPrice;
   let highestPrice = req.body.highestPrice;
 
