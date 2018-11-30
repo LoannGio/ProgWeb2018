@@ -1,6 +1,6 @@
 let DBinfos = require('../helpers/database.js');
 
-// Get projects
+// Get contracts
 exports.getContracts = async function(startDate, endDate, lowerPrice, higherPrice){
   const client = await DBinfos.MongoClient.connect(DBinfos.DBurl, {
       useNewUrlParser: true
