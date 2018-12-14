@@ -5,9 +5,9 @@ class MyMap extends Component {
   constructor() {
     super();
     this.state = {
-      lat: 51.505,
-      lng: -0.09,
-      zoom: 13
+      lat: 46.7167,
+      lng: 2.5167,
+      zoom: 6
     };
   }
 
@@ -19,9 +19,9 @@ class MyMap extends Component {
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
         />
-        <Marker position={position}>
+        <Marker position={[48.833154, 2.294293]}>
           <Popup>
-            A pretty CSS3 popup. <br/> Easily customizable.
+            ORANGE
           </Popup>
         </Marker>
       </Map>

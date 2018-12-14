@@ -38,4 +38,7 @@ body {
     background-color: rgb(125, 125, 125);
   }
 
-  #mapid { height: 180px; }
+  .leaflet-container {
+    height: 650px;
+    width: 100%;
+  }
