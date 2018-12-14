@@ -14,7 +14,7 @@ class MyMap extends Component {
   render() {
     const position = [this.state.lat, this.state.lng];
     return (
-      <LeafletMap center={position} zoom={this.state.zoom}>
+      <Map center={position} zoom={this.state.zoom}>
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
@@ -24,7 +24,7 @@ class MyMap extends Component {
             A pretty CSS3 popup. <br/> Easily customizable.
           </Popup>
         </Marker>
-      </LeafletMap>
+      </Map>
     );
   }
 }
