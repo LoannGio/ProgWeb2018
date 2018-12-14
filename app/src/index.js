@@ -4,7 +4,10 @@ import Main from "./Main";
 import "./stylesheets/bootstrap.css";
 import "./stylesheets/style.css";
 
-ReactDOM.render(
+const domContainer = document.querySelector('#root');
+ReactDOM.render(e(<Main />), domContainer);
+
+/*ReactDOM.render(
     <Main />,
     document.getElementById("root")
-);
+);*/
