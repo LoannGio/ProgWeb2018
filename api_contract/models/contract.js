@@ -10,7 +10,7 @@ exports.getContracts = async function(startDate, endDate, lowerPrice, higherPric
     date: {$in: [startDate, endDate]},
     price: {$in: [lowerPrice, higherPrice]}
 };
-  const contracts = await db.collection(DBinfos.contractCol).find(filter).toArray();
+  const contracts = await db.collection(DBinfos.ContractCol).find(filter).toArray();
   client.close();
   return contracts;
 }
