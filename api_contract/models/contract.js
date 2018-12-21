@@ -7,10 +7,10 @@ exports.getContracts = async function(startDate, endDate, lowerPrice, higherPric
   });
   const db = client.db(DBinfos.BDname);
   const filter = {
-    date: {$in: [startDate, endDate]},
-    price: {$in: [lowerPrice, higherPrice]}
+    "date": {$lte: endDate, $gte: startDate},
+    "amount": {$lte: higherPrice, $gte: lowerPrice}
 };
-  const contracts = await db.collection(DBinfos.ContractCol).find(filter).toArray();
+  const contracts = await db.collection(DBinfos.DBcontract).find(filter).toArray();
   client.close();
   return contracts;
 }

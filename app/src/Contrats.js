@@ -13,11 +13,12 @@ class Contrats extends Component {
     constructor(props){
       super(props);
       this.state = { contracts: [], filter: []};
+      this.loadContracts();
     }
 
-     componentDidMount(){
-      let startDate = new Date();
-      let endDate = startDate.getFullYear()+1;
+      async loadContracts(){
+      let startDate = new Date().setFullYear(2018,12,12);
+      let endDate = new Date().setFullYear(2019,12,12);
       const filter = {
         startDate: startDate,
         endDate: endDate,
@@ -25,28 +26,25 @@ class Contrats extends Component {
         highestPrice:10000000
       };
       const URL = "http://127.0.0.1:5000/contracts"
-       fetch(URL, {
+      let result = await fetch(URL, {
         method: 'POST',
-        mode:'no-cors',
+        mode:'cors',
         headers: {
-           'Accept': 'application/json',
-           'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+           'Accept': 'application/json'
         },
-        body: JSON.stringify({
-          firstParam: 'yourValue',
-          secondParam: 'yourOtherValue',
-        })
+        body: JSON.stringify(filter)
       })
       .then(function (res) {
             return res.json();
       })
       .then(function (contracts) {
             console.log("CONTRACTS FOUND : " + contracts);
-            this.setState({contracts});
-            console.log("LOADED : " + this.state.contracts);
+            return contracts;
       }).catch(function(error){
         console.log(error);
       });
+      this.state.contracts = result;
     }
 
     render() {

@@ -6,15 +6,32 @@ const port = 5000;
 
 app.use(bodyParser.json());
 
+app.use(function (req, res, next) {
+
+    // Website you wish to allow to connect
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+
+    // Request methods you wish to allow
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+    // Request headers you wish to allow
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+    // Set to true if you need the website to include cookies in the requests sent
+    // to the API (e.g. in case you use sessions)
+    res.setHeader('Access-Control-Allow-Credentials', false);
+
+    // Pass to next layer of middleware
+    next();
+});
+
 app.post('/contracts', async function (req, res){
-  console.log(req.body);
-  let startDate = Date.parse(req.body.startDate);
-  let endDate = Date.parse(req.body.endDate);
+  let startDate = req.body.startDate;
+  let endDate = req.body.endDate;
   let lowestPrice = req.body.lowestPrice;
   let highestPrice = req.body.highestPrice;
 
   let contractList = await dbUtils.getContracts(startDate, endDate, lowestPrice, highestPrice);
-  console.log(contractList);
   res.send(contractList);
 });
 
