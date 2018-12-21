@@ -7,7 +7,8 @@ let utils = {
   DBname: DABASE_NAME,
   DBcontract: contractCol,
   DBurl: MONGO_URL,
-  MongoClient: MongoClient
+  MongoClient: MongoClient,
+  ContractCol: contractCol
 };
 
 module.exports = utils;
