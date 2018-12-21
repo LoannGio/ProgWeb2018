@@ -21,7 +21,7 @@ class MyMap extends Component {
         />
         <Marker position={[48.833154, 2.294293]}>
           <Popup>
-            ORANGE
+            <a href={'/entreprise/' + "ORANGE"}>ORANGE</a>
           </Popup>
         </Marker>
       </Map>
