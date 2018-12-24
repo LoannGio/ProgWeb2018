@@ -1,27 +1,52 @@
 import React, { Component } from "react";
 
 class Entreprise extends Component {
+    constructor(props){
+        super(props);
+        this.state = {entrepriseData : []};
+    }
 
-    getEntrepriseName() {
-        let entrepriseName = window.location.href.split('/');
-        return entrepriseName[entrepriseName.length - 1];
+    componentDidMount(){
+        let entrepriseSIRET = this.getentrepriseSIRETFromUrl();
+        if(typeof entrepriseSIRET == "undefined"){
+            entrepriseSIRET = sessionStorage.getItem('siret');
+        }else{
+            sessionStorage.setItem('siret', entrepriseSIRET);
+        }
+        const URL = "https://entreprise.data.gouv.fr/api/sirene/v1/siret/" + entrepriseSIRET;
+        fetch(URL, {
+            method: 'GET',
+            mode: 'cors',
+            headers: {
+                'Accept' : 'application/json'
+            }
+        })
+        .then(res => res.json())
+        .then(json => this.setState({entrepriseData : json.etablissement}))
+        .catch(function(error){
+            console.log("ERROR : " + error);
+        });
+    }
+
+    updateEntrepriseData(newData){
+        this.setState({entrepriseData : newData});
+    }
+
+    getentrepriseSIRETFromUrl() {
+        let entrepriseSIRET = window.location.href.split('entreprise/')[1];
+        return entrepriseSIRET;
     }
 
     render() {
-        let entrepriseName = this.getEntrepriseName();
-        if (entrepriseName === 'entreprise') {
-            return (
-                <p>Cliquez sur un marqueur sur la carte, puis cliquez sur le nom de l'entreprise qui s'affiche pour obtenir ses informations !</p>
-            );
-        }
-        else {
-            return (
-                <div>
-                    <p>{this.getEntrepriseName()}</p>
-                    <p>Multitude d'informations</p>
-                </div>
-            );
-        }
+        return (
+            <div id="entrepriseData">
+                <p>Siret : {this.state.entrepriseData.siret}</p>
+                <p>Nom : {this.state.entrepriseData.nom_raison_sociale}</p>
+                <p>Adresse : {this.state.entrepriseData.geo_adresse}</p>
+                <p>Activité principale : {this.state.entrepriseData.libelle_activite_principale}</p>
+                <p>Effectifs : {this.state.entrepriseData.libelle_tranche_effectif_salarie}</p>
+            </div>
+        );
     }
 }
 

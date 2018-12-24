@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
 
 class MyMap extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       lat: 46.7167,
       lng: 2.5167,
       zoom: 6
     };
+    console.log("contracts : " + this.props.contracts);
   }
 
   render() {
