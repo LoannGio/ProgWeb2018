@@ -38,15 +38,21 @@ class Entreprise extends Component {
     }
 
     render() {
-        return (
-            <div id="entrepriseData">
-                <p>Siret : {this.state.entrepriseData.siret}</p>
-                <p>Nom : {this.state.entrepriseData.nom_raison_sociale}</p>
-                <p>Adresse : {this.state.entrepriseData.geo_adresse}</p>
-                <p>Activité principale : {this.state.entrepriseData.libelle_activite_principale}</p>
-                <p>Effectifs : {this.state.entrepriseData.libelle_tranche_effectif_salarie}</p>
-            </div>
-        );
+        if(typeof this.state.entrepriseData === "undefined"){
+            return (
+                <p>Veuillez sélectionner une entreprise sur la carte des Contrats.</p>
+            );
+        }else{
+            return (
+                <div id="entrepriseData">
+                    <p>Siret : {this.state.entrepriseData.siret}</p>
+                    <p>Nom : {this.state.entrepriseData.nom_raison_sociale}</p>
+                    <p>Adresse : {this.state.entrepriseData.geo_adresse}</p>
+                    <p>Activité principale : {this.state.entrepriseData.libelle_activite_principale}</p>
+                    <p>Effectifs : {this.state.entrepriseData.libelle_tranche_effectif_salarie}</p>
+                </div>
+            );
+        }
     }
 }
 

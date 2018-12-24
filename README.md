@@ -8,4 +8,5 @@ Projet de Programmation Web M2 GL 2018
 * add siret in our BD
 * send siret from Contracts to Enterprise
 * authentification
+* code de retour sereur
 * (babelify, broserify)
