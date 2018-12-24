@@ -13,10 +13,9 @@ class Contrats extends Component {
     constructor(props){
       super(props);
       this.state = { contracts: [], filter: []};
-      this.loadContracts();
     }
 
-      async loadContracts(){
+      componentDidMount(){
       let startDate = new Date().setFullYear(2018,12,12);
       let endDate = new Date().setFullYear(2019,12,12);
       const filter = {
@@ -26,7 +25,7 @@ class Contrats extends Component {
         highestPrice:10000000
       };
       const URL = "http://127.0.0.1:5000/contracts"
-      let result = await fetch(URL, {
+      fetch(URL, {
         method: 'POST',
         mode:'cors',
         headers: {
@@ -35,15 +34,11 @@ class Contrats extends Component {
         },
         body: JSON.stringify(filter)
       })
-      .then(function (res) {
-            return res.json();
-      })
-      .then(function (contracts) {
-            return contracts;
-      }).catch(function(error){
+      .then(res => res.json())
+      .then(json => this.setState({ contracts : json}))
+      .catch(function(error){
         console.log(error);
       });
-      this.state.contracts = result;
     }
 
     render() {
