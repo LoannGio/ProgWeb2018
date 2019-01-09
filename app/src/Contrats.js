@@ -7,14 +7,14 @@ import 'bootstrap-daterangepicker/daterangepicker.css';
 class Contrats extends Component {
   constructor(props) {
     super(props);
-    this.state = { contracts: [], filter: []};
+    this.state = { contracts: [], filter: [] };
   }
 
-  initFilter(){
+  initFilter() {
     let _filter = {};
     this.loadPrice(_filter);
     this.loadDates(_filter);
-    this.setState({filter: _filter});
+    this.setState({ filter: _filter });
   }
 
   loadPrice(filter) {
@@ -38,7 +38,7 @@ class Contrats extends Component {
   loadDates(filter) {
     if (sessionStorage.getItem('startDate') === null || sessionStorage.getItem('startDate') === "") {
       let _startDate = new Date();
-      filter.startDate =  _startDate.getMonth() + 1 + '/' + _startDate.getDate() + '/' + _startDate.getFullYear();
+      filter.startDate = _startDate.getMonth() + 1 + '/' + _startDate.getDate() + '/' + _startDate.getFullYear();
       sessionStorage.setItem('startDate', filter.startDate);
     }
     else {
@@ -52,7 +52,7 @@ class Contrats extends Component {
       sessionStorage.setItem('endDate', filter.endDate);
     }
     else {
-      filter.endDate= sessionStorage.getItem('endDate');
+      filter.endDate = sessionStorage.getItem('endDate');
     }
   }
 
@@ -80,7 +80,9 @@ class Contrats extends Component {
     return (
       <div>
         {this.state.filter.lowestPrice} - {this.state.filter.highestPrice}
-        
+        <DateRangePicker startDate={this.state.filter.startDate} endDate={this.state.filter.endDate}>
+          <button id='datePicker' class='btn btn-primary'>Open Date Picker</button>
+        </DateRangePicker>
         <RangeSlider onChange={this.handleChange} sliderValues={[this.state.filter.lowestPrice, this.state.filter.highestPrice]} />
         <MyMap contracts={this.state.contracts} />
       </div>
