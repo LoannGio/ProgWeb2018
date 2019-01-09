@@ -16,7 +16,7 @@ class Contrats extends Component {
     await this.requestContractsAPI();
   }
 
-  requestContractsAPI(){
+  requestContractsAPI() {
     const filter = this.state.filter;
     const URL = "http://127.0.0.1:5000/contracts"
     fetch(URL, {
@@ -34,17 +34,17 @@ class Contrats extends Component {
         console.log(error);
       });
   }
-  
-  async onApplyDateRangePicker(event, resp){
+
+  async onApplyDateRangePicker(event, resp) {
     let istartDate = +resp.startDate._d;
     let iendDate = +resp.endDate._d;
-    await this.setState({filter:{startDate:istartDate, endDate:iendDate, lowestPrice:this.state.filter.lowestPrice, highestPrice:this.state.filter.highestPrice}});
+    await this.setState({ filter: { startDate: istartDate, endDate: iendDate, lowestPrice: this.state.filter.lowestPrice, highestPrice: this.state.filter.highestPrice } });
     sessionStorage.setItem('startDate', istartDate);
     sessionStorage.setItem('endDate', iendDate);
     this.requestContractsAPI();
   }
 
-  
+
   async initFilter() {
     let _filter = {};
     this.loadPrice(_filter);
@@ -89,26 +89,31 @@ class Contrats extends Component {
       filter.endDate = parseInt(sessionStorage.getItem('endDate'));
     }
   }
-  
-  intDate_to_stringDate(idate){
+
+  intDate_to_stringDate(idate) {
     let date = new Date(idate);
-    return date.getMonth()+1 + '/' + date.getDate() + '/' + date.getFullYear();
+    return date.getMonth() + 1 + '/' + date.getDate() + '/' + date.getFullYear();
   }
 
   render() {
     let str_startDate = this.intDate_to_stringDate(this.state.filter.startDate);
     let str_endDate = this.intDate_to_stringDate(this.state.filter.endDate);
-    return (
-      <div>
-        <p>{this.state.contracts.length} contrat(s) trouvé(s)</p>
-        {this.state.filter.lowestPrice} - {this.state.filter.highestPrice}
-        <DateRangePicker startDate={str_startDate} endDate={str_endDate} onApply={this.onApplyDateRangePicker}>
-          <button id='datePicker' className='btn btn-primary'>{str_startDate} - {str_endDate}</button>
-        </DateRangePicker>
-        <RangeSlider onChange={this.handleChange} sliderValues={[this.state.filter.lowestPrice, this.state.filter.highestPrice]} />
-        <MyMap contracts={this.state.contracts} />
-      </div>
-    );
+    if (this.state.filter.lowestPrice === 1000) {
+      return (
+        <div>
+          <p>{this.state.contracts.length} contrat(s) trouvé(s)</p>
+          {this.state.filter.lowestPrice} - {this.state.filter.highestPrice}
+          <DateRangePicker startDate={str_startDate} endDate={str_endDate} onApply={this.onApplyDateRangePicker}>
+            <button id='datePicker' className='btn btn-primary'>{str_startDate} - {str_endDate}</button>
+          </DateRangePicker>
+          <RangeSlider onChange={this.handleChange} sliderValues={[this.state.filter.lowestPrice, this.state.filter.highestPrice]} />
+          <MyMap contracts={this.state.contracts} />
+        </div>
+      );
+    }
+    else {
+      return null;
+    }
   }
 }
 

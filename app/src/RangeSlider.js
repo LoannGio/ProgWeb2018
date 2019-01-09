@@ -14,14 +14,6 @@ class RangeSlider extends Component {
     this.setState({ sliderValues });
   };
 
-  componentWillReceiveProps(props){
-    if(this.props.sliderValues !== props.sliderValues){
-      this.props = props;
-      this.setState({ sliderValues: this.props.sliderValues });
-      this.forceUpdate();
-    }
-  }
-
   render() {
     const sliderValues = this.state.sliderValues;
     return (
