@@ -1,47 +1,78 @@
 import React, { Component } from "react";
 import MyMap from "./MyMap";
-import 'rc-slider/assets/index.css';
-import 'rc-tooltip/assets/bootstrap.css';
+import RangeSlider from "./RangeSlider";
 import DateRangePicker from 'react-bootstrap-daterangepicker';
 import 'bootstrap-daterangepicker/daterangepicker.css';
-import Slider from 'rc-slider';
-
-const createSliderWithTooltip = Slider.createSliderWithTooltip;
-const Range = createSliderWithTooltip(Slider.Range);
-
-const wrapperStyle = { margin: 50 };
 
 class Contrats extends Component {
   constructor(props) {
     super(props);
+<<<<<<< HEAD
     this.state = { contracts: [], filter: [] };
+=======
+    this.state = { contracts: [], filter: []};
   }
 
-  loadDates(){
-    if(typeof sessionStorage.getItem('startDate') == 'undefined'){
-      let _startDate = new Date();
-      let stringStartDate = _startDate.getMonth()+1 + '/' + _startDate.getDate() + '/' + _startDate.getFullYear();
-      this.setState({filter : {startDate : stringStartDate}});
-      sessionStorage.setItem('startDate', this.state.filter.startDate);
+  initFilter(){
+    let _filter = {};
+    this.loadPrice(_filter);
+    this.loadDates(_filter);
+    this.setState({filter: _filter});
+  }
+
+  loadPrice(filter) {
+    if (sessionStorage.getItem('lowestPrice') === null || sessionStorage.getItem('lowestPrice') === "") {
+      filter.lowestPrice = 1000;
+      sessionStorage.setItem('lowestPrice', filter.lowestPrice);
     }
-    else{
-      this.setState({filter : {startDate: sessionStorage.getItem('startDate')}});
+    else {
+      filter.lowestPrice = parseInt(sessionStorage.getItem('lowestPrice'));
     }
 
-    if(typeof sessionStorage.getItem('endDate') == 'undefined'){
+    if (sessionStorage.getItem('highestPrice') === null || sessionStorage.getItem('highestPrice') === "") {
+      filter.highestPrice = 100000;
+      sessionStorage.setItem('highestPrice', filter.highestPrice);
+    }
+    else {
+      filter.highestPrice = parseInt(sessionStorage.getItem('highestPrice'));
+    }
+>>>>>>> 117e1fafb6788f9e114ed251e14f222cf04126ea
+  }
+
+  loadDates(filter) {
+    if (sessionStorage.getItem('startDate') === null || sessionStorage.getItem('startDate') === "") {
+      let _startDate = new Date();
+      filter.startDate =  _startDate.getMonth() + 1 + '/' + _startDate.getDate() + '/' + _startDate.getFullYear();
+      sessionStorage.setItem('startDate', filter.startDate);
+    }
+    else {
+      filter.startDate = sessionStorage.getItem('startDate');
+    }
+
+    if (sessionStorage.getItem('endDate') === null || sessionStorage.getItem('endDate') === "") {
       let _endDate = new Date();
+<<<<<<< HEAD
       _endDate.setDate(_endDate.getDate() + 1);   
       let stringEndDate = _endDate.getMonth()+1 + '/' + _endDate.getDate()+1 + '/' + _endDate.getFullYear();
       this.setState({filter : {endDate : stringEndDate}});
       sessionStorage.setItem('endDate', this.state.filter.endDate);
+=======
+      _endDate.setDate(_endDate.getDate() + 1);
+      filter.endDate = _endDate.getMonth() + 1 + '/' + _endDate.getDate() + '/' + _endDate.getFullYear();
+      sessionStorage.setItem('endDate', filter.endDate);
+>>>>>>> 117e1fafb6788f9e114ed251e14f222cf04126ea
     }
-    else{
-      this.setState({filter : {endDate: sessionStorage.getItem('endDate')}});
+    else {
+      filter.endDate= sessionStorage.getItem('endDate');
     }
   }
 
   componentDidMount() {
+<<<<<<< HEAD
     this.loadDates();
+=======
+    this.initFilter();
+>>>>>>> 117e1fafb6788f9e114ed251e14f222cf04126ea
     const filter = this.state.filter;
     const URL = "http://127.0.0.1:5000/contracts"
     fetch(URL, {
@@ -63,14 +94,10 @@ class Contrats extends Component {
   render() {
     return (
       <div>
+        {this.state.filter.lowestPrice} - {this.state.filter.highestPrice}
+        
+        <RangeSlider onChange={this.handleChange} sliderValues={[this.state.filter.lowestPrice, this.state.filter.highestPrice]} />
         <MyMap contracts={this.state.contracts} />
-        <div style={wrapperStyle}>
-          <p>Afficher les montants compris entre : </p>
-          <Range min={0} max={200000} defaultValue={[1000, 100000]} step={500} marks={{ 0: '0 €', 50000: '50 000 €', 100000: '100 000 €', 150000: '150 000 €', 200000: '200 000 €' }} tipFormatter={value => `${value}€`} />
-          <DateRangePicker startDate={this.state.filter.startDate} endDate={this.state.filter.endDate}>
-            <button id='datePicker' class='btn btn-primary'>Open Date Picker</button>
-          </DateRangePicker>
-        </div>
       </div>
     );
   }
