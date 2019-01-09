@@ -14,8 +14,16 @@ class RangeSlider extends Component {
     this.setState({ sliderValues });
   };
 
+  componentWillReceiveProps(props){
+    if(this.props.sliderValues !== props.sliderValues){
+      this.props = props;
+      this.setState({ sliderValues: this.props.sliderValues });
+      this.forceUpdate();
+    }
+  }
+
   render() {
-    const { sliderValues } = this.state;
+    const sliderValues = this.state.sliderValues;
     return (
       <div style={wrapperStyle}>
         {sliderValues[0]} - {sliderValues[1]}
@@ -27,7 +35,7 @@ class RangeSlider extends Component {
           onChange={this.handleChange}
           defaultValue={sliderValues}
           marks={{ 0: '0 €', 50000: '50 000 €', 100000: '100 000 €', 150000: '150 000 €', 200000: '200 000 €' }}
-          tipFormatter={value => <span className="tooltip">{value}€</span>}
+          tipFormatter={value => `${value}€`}
         />
       </div>
     );
