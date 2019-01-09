@@ -30,7 +30,7 @@ class MyMap extends Component {
         {this.props.contracts.map(el => (
           <Marker position={[el.lng, el.lat]}>
             <Popup>
-              <a href={'/entreprise/' + el.name}>{el.name}</a>
+              <a href={'/entreprise/' + el.siret}>{el.name}</a>
             </Popup>
           </Marker>
           ))}
