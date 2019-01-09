@@ -42,3 +42,7 @@ body {
     height: 650px;
     width: 100%;
   }
+
+  #datePicker {
+    margin: 10px;
+  }
