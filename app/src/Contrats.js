@@ -15,7 +15,6 @@ class Contrats extends Component {
   constructor(props) {
     super(props);
     this.state = { contracts: [], filter: [] };
-    this.loadDates();
   }
 
   loadDates(){
@@ -32,7 +31,7 @@ class Contrats extends Component {
     if(typeof sessionStorage.getItem('endDate') == 'undefined'){
       let _endDate = new Date();
       _endDate.setDate(_endDate.getDate() + 1);   
-      let stringEndDate = _endDate.getMonth()+1 + '/' + _endDate.getDate() + '/' + _endDate.getFullYear();
+      let stringEndDate = _endDate.getMonth()+1 + '/' + _endDate.getDate()+1 + '/' + _endDate.getFullYear();
       this.setState({filter : {endDate : stringEndDate}});
       sessionStorage.setItem('endDate', this.state.filter.endDate);
     }
@@ -42,12 +41,8 @@ class Contrats extends Component {
   }
 
   componentDidMount() {
-    const filter = {
-      startDate: this.state.filter.startDate,
-      endDate: this.state.filter.endDate,
-      lowestPrice: 10,
-      highestPrice: 10000000
-    };
+    this.loadDates();
+    const filter = this.state.filter;
     const URL = "http://127.0.0.1:5000/contracts"
     fetch(URL, {
       method: 'POST',
