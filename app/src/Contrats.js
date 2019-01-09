@@ -77,16 +77,21 @@ class Contrats extends Component {
   }
 
   render() {
-    return (
-      <div>
-        {this.state.filter.lowestPrice} - {this.state.filter.highestPrice}
-        <DateRangePicker startDate={this.state.filter.startDate} endDate={this.state.filter.endDate}>
-          <button id='datePicker' class='btn btn-primary'>Open Date Picker</button>
-        </DateRangePicker>
-        <RangeSlider onChange={this.handleChange} sliderValues={[this.state.filter.lowestPrice, this.state.filter.highestPrice]} />
-        <MyMap contracts={this.state.contracts} />
-      </div>
-    );
+    if(this.state.filter.lowestPrice === 1000){
+      return (
+        <div>
+          {this.state.filter.lowestPrice} - {this.state.filter.highestPrice}
+          <DateRangePicker startDate={this.state.filter.startDate} endDate={this.state.filter.endDate}>
+            <button id='datePicker' class='btn btn-primary'>Open Date Picker</button>
+          </DateRangePicker>
+          <RangeSlider onChange={this.handleChange} sliderValues={[this.state.filter.lowestPrice, this.state.filter.highestPrice]} />
+          <MyMap contracts={this.state.contracts} />
+        </div>
+      );
+    }
+    else{
+      return null;
+    }
   }
 }
 
