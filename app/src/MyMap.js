@@ -31,6 +31,8 @@ class MyMap extends Component {
           <Marker position={[el.lng, el.lat]}>
             <Popup>
               <a href={'/entreprise/' + el.siret}>{el.name}</a>
+              <p>Montant : {el.amount}</p>
+              <p>Date : {new Date(el.date).toDateString()}</p>
             </Popup>
           </Marker>
           ))}
