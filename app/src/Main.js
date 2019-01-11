@@ -13,10 +13,12 @@ class Main extends Component {
             <BrowserRouter>
                 <div>
                     <h1>Géovisionneur de contrats</h1>
-                    <ul className="header">
-                        <li><NavLink exact to="/">Contrats</NavLink></li>
-                        <li><NavLink to="/entreprise">Entreprise</NavLink></li>
-                    </ul>
+                    <div className="headerWrapper">
+                        <ul className="header">
+                            <li><NavLink exact to="/">Contrats</NavLink></li>
+                            <li><NavLink to="/entreprise">Entreprise</NavLink></li>
+                        </ul>
+                    </div>
                     <div className="content">
                         <Route exact path="/" component={Contrats} />
                         <Route path="/entreprise" component={Entreprise} />

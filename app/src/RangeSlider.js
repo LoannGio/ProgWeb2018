@@ -5,27 +5,19 @@ import Slider from 'rc-slider';
 
 const createSliderWithTooltip = Slider.createSliderWithTooltip;
 const Range = createSliderWithTooltip(Slider.Range);
-const wrapperStyle = { margin: 50 };
 
 class RangeSlider extends Component {
-  state = { sliderValues: this.props.sliderValues };
-
-  handleChange = sliderValues => {
-    this.setState({ sliderValues });
-  };
 
   render() {
-    const sliderValues = this.state.sliderValues;
     return (
-      <div style={wrapperStyle}>
-        {sliderValues[0]} - {sliderValues[1]}
-        <p>Afficher les montants compris entre : </p>
+      <div id="priceSlider">
+        <p>Montants entre {this.props.sliderValues[0]}€ et {this.props.sliderValues[1]}€</p>
         <Range
           min={0}
           max={200000}
           step={500}
-          onChange={this.handleChange}
-          defaultValue={sliderValues}
+          onChange={this.props.onChange}
+          defaultValue={this.props.sliderValues}
           marks={{ 0: '0 €', 50000: '50 000 €', 100000: '100 000 €', 150000: '150 000 €', 200000: '200 000 €' }}
           tipFormatter={value => `${value}€`}
         />

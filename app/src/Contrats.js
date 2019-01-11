@@ -9,6 +9,7 @@ class Contrats extends Component {
     super(props);
     this.state = { contracts: [], filter: [] };
     this.onApplyDateRangePicker = this.onApplyDateRangePicker.bind(this);
+    this.onChangeRangeSlider = this.onChangeRangeSlider.bind(this);
   }
 
   async componentDidMount() {
@@ -54,7 +55,7 @@ class Contrats extends Component {
 
   loadPrice(filter) {
     if (sessionStorage.getItem('lowestPrice') === null || sessionStorage.getItem('lowestPrice') === "") {
-      filter.lowestPrice = 1000;
+      filter.lowestPrice = 0;
       sessionStorage.setItem('lowestPrice', filter.lowestPrice);
     }
     else {
@@ -62,7 +63,7 @@ class Contrats extends Component {
     }
 
     if (sessionStorage.getItem('highestPrice') === null || sessionStorage.getItem('highestPrice') === "") {
-      filter.highestPrice = 100000;
+      filter.highestPrice = 200000;
       sessionStorage.setItem('highestPrice', filter.highestPrice);
     }
     else {
@@ -95,19 +96,31 @@ class Contrats extends Component {
     return date.getMonth() + 1 + '/' + date.getDate() + '/' + date.getFullYear();
   }
 
+  async onChangeRangeSlider(range) {
+    let _lowestPrice = range[0];
+    let _highestPrice = range[1];
+    await this.setState({ filter: { startDate: this.state.filter.startDate, endDate: this.state.filter.endDate, lowestPrice: _lowestPrice, highestPrice: _highestPrice } });
+    sessionStorage.setItem('lowestPrice', _lowestPrice);
+    sessionStorage.setItem('highestPrice', _highestPrice);
+    this.requestContractsAPI();
+  }
+
   render() {
     let str_startDate = this.intDate_to_stringDate(this.state.filter.startDate);
     let str_endDate = this.intDate_to_stringDate(this.state.filter.endDate);
-    if (this.state.filter.lowestPrice === 1000) {
+    if (typeof this.state.filter.lowestPrice !== 'undefined') {
       return (
-        <div>
-          <p>{this.state.contracts.length} contrat(s) trouvé(s)</p>
-          {this.state.filter.lowestPrice} - {this.state.filter.highestPrice}
-          <DateRangePicker startDate={str_startDate} endDate={str_endDate} onApply={this.onApplyDateRangePicker}>
-            <button id='datePicker' className='btn btn-primary'>{str_startDate} - {str_endDate}</button>
-          </DateRangePicker>
-          <RangeSlider onChange={this.handleChange} sliderValues={[this.state.filter.lowestPrice, this.state.filter.highestPrice]} />
-          <MyMap contracts={this.state.contracts} />
+        <div id="contracts">
+          <div id="filters">
+          <p id="contractsFound">{this.state.contracts.length} contrat(s) trouvé(s)</p>
+            <DateRangePicker startDate={str_startDate} endDate={str_endDate} onApply={this.onApplyDateRangePicker}>
+              <button id='datePicker' className='btn btn-primary'>{str_startDate} - {str_endDate}</button>
+            </DateRangePicker>
+            <RangeSlider onChange={this.onChangeRangeSlider} sliderValues={[this.state.filter.lowestPrice, this.state.filter.highestPrice]} />
+          </div>
+          <div id="map">
+            <MyMap contracts={this.state.contracts} />
+          </div>
         </div>
       );
     }
