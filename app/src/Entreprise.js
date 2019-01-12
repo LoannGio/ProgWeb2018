@@ -40,7 +40,9 @@ class Entreprise extends Component {
     render() {
         if (typeof this.state.entrepriseData === "undefined") {
             return (
-                <p>Veuillez sélectionner une entreprise sur la carte des Contrats.</p>
+                <div id="entrepriseData">
+                    <p>Veuillez sélectionner une entreprise sur la carte des Contrats.</p>
+                </div>
             );
         } else {
             return (

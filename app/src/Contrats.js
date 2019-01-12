@@ -54,8 +54,10 @@ class Contrats extends Component {
   }
 
   loadPrice(filter) {
+    const default_lowestPrice = 0;
+    const default_highestPrice = 200000;
     if (sessionStorage.getItem('lowestPrice') === null || sessionStorage.getItem('lowestPrice') === "") {
-      filter.lowestPrice = 0;
+      filter.lowestPrice = default_lowestPrice;
       sessionStorage.setItem('lowestPrice', filter.lowestPrice);
     }
     else {
@@ -63,7 +65,7 @@ class Contrats extends Component {
     }
 
     if (sessionStorage.getItem('highestPrice') === null || sessionStorage.getItem('highestPrice') === "") {
-      filter.highestPrice = 200000;
+      filter.highestPrice = default_highestPrice;
       sessionStorage.setItem('highestPrice', filter.highestPrice);
     }
     else {
@@ -72,8 +74,10 @@ class Contrats extends Component {
   }
 
   loadDates(filter) {
+    const default_startDate = new Date().setFullYear(2016,0,1);
+    const default_endDate = new Date().setFullYear(2020,11,31);
     if (sessionStorage.getItem('startDate') === null || sessionStorage.getItem('startDate') === "") {
-      filter.startDate = new Date();
+      filter.startDate = default_startDate;
       sessionStorage.setItem('startDate', +filter.startDate);
     }
     else {
@@ -81,9 +85,7 @@ class Contrats extends Component {
     }
 
     if (sessionStorage.getItem('endDate') === null || sessionStorage.getItem('endDate') === "") {
-      let _endDate = new Date();
-      _endDate.setDate(_endDate.getDate() + 1);
-      filter.endDate = _endDate;
+      filter.endDate = default_endDate;
       sessionStorage.setItem('endDate', +filter.endDate);
     }
     else {
