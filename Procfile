@@ -1,1 +1,0 @@
-web: cd api_contract && node server.js
