@@ -17,8 +17,8 @@ function loadPage(logStatus) {
                 onInitFailure={(response) => console.log("Error: " + response)} >
                 <div>
                     <div id="logout">
-                        <span>Connecté en tant que {sessionStorage.getItem('user')}</span>
-                        <GoogleLogout 
+                        <span>Connecté en tant que {localStorage.getItem('user')}</span>
+                        <GoogleLogout
                             text={"Se déconnecter"}
                         />
                     </div>
@@ -37,7 +37,7 @@ function loadPage(logStatus) {
                     <h1 id="welcome" className="title">Bienvenue sur Contracts Viewer</h1>
                     <GoogleLogin
                         text="Se connecter"
-                        onLoginSuccess={(user) => sessionStorage.setItem('user', user.getBasicProfile().getName())}
+                        onLoginSuccess={(user) => localStorage.setItem('user', user.getBasicProfile().getName())}
                     />
                 </div>
             </GoogleAPI>,

@@ -19,7 +19,7 @@ class Contrats extends Component {
 
   requestContractsAPI() {
     let filter = this.state.filter;
-    if (sessionStorage.getItem('user') !== null || typeof sessionStorage.getItem('user') !== 'undefined')
+    if (localStorage.getItem('user') !== null || typeof localStorage.getItem('user') !== 'undefined')
       filter.userIsLogged = true;
     else
       filter.userIsLogged = false;
