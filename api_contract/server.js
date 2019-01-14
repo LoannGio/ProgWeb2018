@@ -2,7 +2,7 @@ const express = require('express');
 const dbUtils = require('./models/contract.js');
 const bodyParser = require('body-parser');
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 80;
 
 app.use(bodyParser.json());
 
@@ -23,6 +23,10 @@ app.use(function (req, res, next) {
 
     // Pass to next layer of middleware
     next();
+});
+
+app.get('/hello', function (req, res){
+  res.send('hello world');
 });
 
 app.post('/contracts', async function (req, res){
