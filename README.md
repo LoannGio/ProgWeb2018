@@ -1,8 +1,6 @@
 # ProgWeb2018
 Projet de Programmation Web M2 GL 2018
 
-#TODO
+Ce Github contient la partie Front du projet, réalisée en React.
 
-* authentification
-* code de retour serveur
-* (babelify, broserify)
+La petite API que nous avons développée est disponible à l'adresse : https://github.com/LoannGio/ProgWeb2018API_contracts
