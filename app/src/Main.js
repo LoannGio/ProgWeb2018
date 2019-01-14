@@ -12,7 +12,7 @@ class Main extends Component {
         return (
             <BrowserRouter>
                 <div>
-                    <h1>Géovisionneur de contrats</h1>
+                    <h1 className="title">Contracts Viewer</h1>
                     <div className="headerWrapper">
                         <ul className="header">
                             <li><NavLink exact to="/">Contrats</NavLink></li>

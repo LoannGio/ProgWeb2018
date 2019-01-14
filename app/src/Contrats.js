@@ -19,7 +19,8 @@ class Contrats extends Component {
 
   requestContractsAPI() {
     const filter = this.state.filter;
-    const URL = "http://127.0.0.1:5000/contracts"
+    //const URL = "http://127.0.0.1:5000/contracts"
+    const URL = "https://api-contracts1.herokuapp.com/contracts";
     fetch(URL, {
       method: 'POST',
       mode: 'cors',
