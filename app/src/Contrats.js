@@ -18,17 +18,18 @@ class Contrats extends Component {
   }
 
   requestContractsAPI() {
-    const filter = this.state.filter;
-    //const URL = "http://127.0.0.1:5000/contracts"
-    const URL = "https://api-contracts1.herokuapp.com/contracts";
-    fetch(URL, {
-      method: 'POST',
+    let filter = this.state.filter;
+    if (sessionStorage.getItem('user') !== null || typeof sessionStorage.getItem('user') !== 'undefined')
+      filter.userIsLogged = true;
+    else
+      filter.userIsLogged = false;
+    const url = "https://api-contracts1.herokuapp.com/contracts/" + filter.lowestPrice + "/" + filter.highestPrice + "/" + filter.startDate + "/" + filter.endDate + "/" + filter.userIsLogged;
+    fetch(url, {
+      method: 'GET',
       mode: 'cors',
       headers: {
-        'Content-Type': 'application/json',
         'Accept': 'application/json'
-      },
-      body: JSON.stringify(filter)
+      }
     })
       .then(res => res.json())
       .then(json => this.setState({ contracts: json }))
@@ -75,8 +76,8 @@ class Contrats extends Component {
   }
 
   loadDates(filter) {
-    const default_startDate = new Date().setFullYear(2016,0,1);
-    const default_endDate = new Date().setFullYear(2020,11,31);
+    const default_startDate = new Date().setFullYear(2016, 0, 1);
+    const default_endDate = new Date().setFullYear(2020, 11, 31);
     if (sessionStorage.getItem('startDate') === null || sessionStorage.getItem('startDate') === "") {
       filter.startDate = default_startDate;
       sessionStorage.setItem('startDate', +filter.startDate);
@@ -115,7 +116,7 @@ class Contrats extends Component {
       return (
         <div id="contracts">
           <div id="filters">
-          <p id="contractsFound">{this.state.contracts.length} contrat(s) trouvé(s)</p>
+            <p id="contractsFound">{this.state.contracts.length} contrat(s) trouvé(s)</p>
             <DateRangePicker startDate={str_startDate} endDate={str_endDate} onApply={this.onApplyDateRangePicker}>
               <button id='datePicker' className='btn btn-primary'>{str_startDate} - {str_endDate}</button>
             </DateRangePicker>
