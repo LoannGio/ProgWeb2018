@@ -8,7 +8,7 @@ import "./styles/index.css";
 if (typeof sessionStorage.getItem('userIsLogged') === 'undefined' || sessionStorage.getItem('userIsLogged') === null)
     sessionStorage.setItem('userIsLogged', false);
 
-let logged = sessionStorage.getItem('userIsLogged');
+let logged = (sessionStorage.getItem('userIsLogged') === 'true' ) ;
 
 loadPage(logged);
 
@@ -26,7 +26,7 @@ function handleLogout() {
 }
 
 function loadPage(logStatus) {
-    if (logStatus) {
+    if(logStatus) {
         ReactDOM.render(
             <GoogleAPI clientId="487523406083-avfllqgnd7j3djv764ftlilj8uphkq81.apps.googleusercontent.com"
                 onInitFailure={(response) => alert("Error: " + response)} >
