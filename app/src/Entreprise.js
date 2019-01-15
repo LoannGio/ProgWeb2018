@@ -8,24 +8,26 @@ class Entreprise extends Component {
 
     componentDidMount() {
         let entrepriseSIRET = this.getentrepriseSIRETFromUrl();
-        if (typeof entrepriseSIRET == "undefined") {
+        if (typeof entrepriseSIRET === "undefined") {
             entrepriseSIRET = sessionStorage.getItem('siret');
         } else {
             sessionStorage.setItem('siret', entrepriseSIRET);
         }
-        const URL = "https://entreprise.data.gouv.fr/api/sirene/v1/siret/" + entrepriseSIRET;
-        fetch(URL, {
-            method: 'GET',
-            mode: 'cors',
-            headers: {
-                'Accept': 'application/json'
-            }
-        })
-            .then(res => res.json())
-            .then(json => this.setState({ entrepriseData: json.etablissement }))
-            .catch(function (error) {
-                console.log("ERROR : " + error);
-            });
+        if (entrepriseSIRET !== null) {
+            const URL = "https://entreprise.data.gouv.fr/api/sirene/v1/siret/" + entrepriseSIRET;
+            fetch(URL, {
+                method: 'GET',
+                mode: 'cors',
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+                .then(res => res.json())
+                .then(json => this.setState({ entrepriseData: json.etablissement }))
+                .catch(function (error) {
+                    console.log("ERROR : " + error);
+                });
+        }
     }
 
     updateEntrepriseData(newData) {
@@ -38,7 +40,7 @@ class Entreprise extends Component {
     }
 
     render() {
-        if (typeof this.state.entrepriseData === "undefined") {
+        if (typeof this.state.entrepriseData === "undefined" || this.state.entrepriseData.length === 0) {
             return (
                 <div id="entrepriseData">
                     <p>Veuillez sélectionner une entreprise sur la carte des Contrats.</p>

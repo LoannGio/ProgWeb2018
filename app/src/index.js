@@ -5,18 +5,23 @@ import { GoogleAPI, GoogleLogin, GoogleLogout } from 'react-google-oauth';
 import './styles/bootstrap/css/bootstrap.css';
 import "./styles/index.css";
 
-let logged = false;
+if (typeof sessionStorage.getItem('userIsLogged') === 'undefined' || sessionStorage.getItem('userIsLogged') === null)
+    sessionStorage.setItem('userIsLogged', false);
+
+let logged = sessionStorage.getItem('userIsLogged');
 
 loadPage(logged);
 
 function handleLogin(user) {
     sessionStorage.setItem('user', user.getBasicProfile().getName());
     logged = true;
+    sessionStorage.setItem('userIsLogged', true);
     loadPage(logged);
 }
 
 function handleLogout() {
     logged = false;
+    sessionStorage.setItem('userIsLogged', false);
     loadPage(logged);
 }
 
