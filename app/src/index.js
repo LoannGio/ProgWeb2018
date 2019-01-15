@@ -9,17 +9,28 @@ let logged = false;
 
 loadPage(logged);
 
+function handleLogin(user) {
+    sessionStorage.setItem('user', user.getBasicProfile().getName());
+    logged = true;
+    loadPage(logged);
+}
+
+function handleLogout() {
+    logged = false;
+    loadPage(logged);
+}
+
 function loadPage(logStatus) {
     if (logStatus) {
         ReactDOM.render(
             <GoogleAPI clientId="487523406083-avfllqgnd7j3djv764ftlilj8uphkq81.apps.googleusercontent.com"
-                onUpdateSigninStatus={(response) => loadPage(response)}
-                onInitFailure={(response) => console.log("Error: " + response)} >
+                onInitFailure={(response) => alert("Error: " + response)} >
                 <div>
                     <div id="logout">
-                        <span>Connecté en tant que {localStorage.getItem('user')}</span>
+                        <span>Connecté en tant que {sessionStorage.getItem('user')}</span>
                         <GoogleLogout
-                            text={"Se déconnecter"}
+                            text="Se déconnecter"
+                            onLogoutSuccess={() => handleLogout()}
                         />
                     </div>
                     <Main />
@@ -31,13 +42,12 @@ function loadPage(logStatus) {
     else {
         ReactDOM.render(
             <GoogleAPI clientId="487523406083-avfllqgnd7j3djv764ftlilj8uphkq81.apps.googleusercontent.com"
-                onUpdateSigninStatus={(response) => loadPage(response)}
-                onInitFailure={(response) => console.log("Error: " + response)} >
+                onInitFailure={(response) => alert("Error: " + response)} >
                 <div id="login">
                     <h1 id="welcome" className="title">Bienvenue sur Contracts Viewer</h1>
                     <GoogleLogin
                         text="Se connecter"
-                        onLoginSuccess={(user) => localStorage.setItem('user', user.getBasicProfile().getName())}
+                        onLoginSuccess={(user) => handleLogin(user)}
                     />
                 </div>
             </GoogleAPI>,
