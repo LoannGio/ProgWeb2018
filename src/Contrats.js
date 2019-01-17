@@ -23,7 +23,9 @@ class Contrats extends Component {
       filter.userIsLogged = true;
     else
       filter.userIsLogged = false;
-    const url = "https://api-contracts1.herokuapp.com/contracts/" + filter.lowestPrice + "/" + filter.highestPrice + "/" + filter.startDate + "/" + filter.endDate + "/" + filter.userIsLogged;
+    //const server = "http://localhost:80/contracts/";
+    const server = "https://api-contracts1.herokuapp.com/contracts/";
+    const url = server + filter.lowestPrice + "/" + filter.highestPrice + "/" + filter.startDate + "/" + filter.endDate + "/" + filter.userIsLogged;
     fetch(url, {
       method: 'GET',
       mode: 'cors',
